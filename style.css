@@ -107,13 +107,13 @@ nav {
 
 main {
     width: 90%;
-    max-width: 1400px;
+    /* max-width: 1400px; */
     margin: auto;
     padding: 0;
 }
 
 .me {
-    min-height: 90vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -122,16 +122,9 @@ main {
     padding: 0 2rem;
 }
 
-.me h1 {
-    font-size: 4rem;
-    color: var(--primary-color);
-    text-shadow: 0 0 15px var(--shadow-color);
-    font-weight: 700;
-}
-
 .me p {
     font-size: 1.5rem;
-    font-weight: 300;
+    font-weight: 500;
 }
 
 .content-section {
@@ -263,11 +256,7 @@ footer {
     transition: all 0.3s ease-in-out;
 }
 
-@media (max-width: 768px) {
-    .me h1 {
-        font-size: 2.5rem;
-    }
-
+@media (max-width: 48em) {
     .me p {
         font-size: 1.2rem;
     }
