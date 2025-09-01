@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const elapsed = timestamp - lastToggleTime;
 
-        if (elapsed > 200000) {
+        if (elapsed > 20000) {
             canvas.classList.toggle('is-fbt');
 
             lastToggleTime = timestamp;
