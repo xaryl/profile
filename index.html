@@ -15,7 +15,8 @@
 </head>
 
 <body>
-    <div class="background-animation"></div>
+    <script src="script.js"></script>
+    <div id="container" class="background-animation"></div>
 
     <header>
         <nav>
@@ -364,30 +365,22 @@
             <div class="card">
                 <h3>Formal Education</h3>
                 <h4>Kyiv Polytechnic Institute</h4>
-                <ul>
-                    <li>BSc Biotechnology</li>
-                </ul>
+                <div class="skill-item">BSc Biotechnology</div>
                 <br>
                 <h3>Specialized Coursework & Certifications</h3>
 
                 <h4>Johns Hopkins University (via Coursera)</h4>
-                <ul>
-                    <li>Introduction to Genomic Technologies</li>
-                    <li>Python for Genomic Data Science</li>
-                    <li>Algorithms for DNA Sequencing</li>
-                    <li>Command Line Tools for Genomic Data Science</li>
-                </ul>
+                <div class="skill-item">Introduction to Genomic Technologies</div>
+                <div class="skill-item">Python for Genomic Data Science</div>
+                <div class="skill-item">Algorithms for DNA Sequencing</div>
+                <div class="skill-item">Command Line Tools for Genomic Data Science</div>
                 <h4><br></h4>
                 <h4>365 Careers (via Udemy)</h4>
-                <ul>
-                    <li>Machine Learning 101 with Scikit-learn and StatsModels</li>
-                </ul>
+                <div class="skill-item">Machine Learning 101 with Scikit-learn and StatsModels</div>
                 <h4><br></h4>
                 <h4>GENOMICS UA</h4>
-                <ul>
-                    <li>RNA-Sequencing: Data Analysis in R</li>
-                    <li>Introduction to R and RNA-sequencing</li>
-                </ul>
+                <div class="skill-item">RNA-Sequencing: Data Analysis in R</div>
+                <div class="skill-item">Introduction to R and RNA-sequencing</div>
             </div>
         </section>
 
@@ -396,35 +389,29 @@
             <div class="card-container">
                 <div class="card">
                     <h3>Lab Techniques</h3>
-                    <ul>
-                        <li>PCR</li>
-                        <li>Gel Electrophoresis</li>
-                        <li>Cell Culture (Fungal/Bacterial)</li>
-                        <li>Microscopy</li>
-                        <li>Agrobaterium-mediated plant transformation</li>
-                        <li>Work In Aseptic (Sterile) Conditions</li>
-                    </ul>
+                    <div class="skill-item">PCR</div>
+                    <div class="skill-item">Gel Electrophoresis</div>
+                    <div class="skill-item">Cell Culture (Fungal/Bacterial)</div>
+                    <div class="skill-item">Microscopy</div>
+                    <div class="skill-item">Agrobaterium-mediated plant transformation</div>
+                    <div class="skill-item">Work In Aseptic (Sterile) Conditions</div>
                 </div>
                 <div class="card">
                     <h3>Computational Skills</h3>
-                    <ul>
-                        <li>Python (Pandas, Matplotlib, OpenCV, Biopython, Scikit-Learn)</li>
-                        <li>R (Tidyverse, ClusterProfiler, DESeq2, Limma, BiomaRt)</li>
-                        <li>BLAST, MEGA-X</li>
-                        <li>Microsoft Office Suite</li>
-                        <li>Git, Github, VMs, Linux etc.</li>
-                    </ul>
+                    <div class="skill-item">Python (Pandas, Matplotlib, OpenCV, Biopython, Scikit-Learn)</div>
+                    <div class="skill-item">R (Tidyverse, ClusterProfiler, DESeq2, Limma, BiomaRt)</div>
+                    <div class="skill-item">BLAST, MEGA-X</div>
+                    <div class="skill-item">Microsoft Office Suite</div>
+                    <div class="skill-item">Git, Github, VMs, Linux etc.</div>
                 </div>
                 <div class="card">
                     <h3>Research Interests</h3>
-                    <ul>
-                        <li>CRISPR-Cas9</li>
-                        <li>Biogenic Magnetic Nanoparticles</li>
-                        <li>Drug Discovery</li>
-                        <li>RNA-Seq Data Analysis</li>
-                        <li>Spatial Transcriptomics</li>
-                        <li>Sustainable Biomaterials</li>
-                    </ul>
+                    <div class="skill-item">CRISPR-Cas9</div>
+                    <div class="skill-item">Biogenic Magnetic Nanoparticles</div>
+                    <div class="skill-item">Drug Discovery</div>
+                    <div class="skill-item">RNA-Seq Data Analysis</div>
+                    <div class="skill-item">Spatial Transcriptomics</div>
+                    <div class="skill-item">Sustainable Biomaterials</div>
                 </div>
             </div>
         </section>
@@ -467,7 +454,7 @@
                 <div class="card">
                     <h3>Jennifer A. Doudna</h3>
                     <p>
-                        The power to control our species’ genetic future is awesome and terrifying. Deciding how to
+                        The power to control our species' genetic future is awesome and terrifying. Deciding how to
                         handle it may be the biggest challenge we have ever faced.
                     </p>
                 </div>
@@ -498,7 +485,252 @@
         <p>© 2025 xaryl. Built with passion and coffee.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+
+                    const sectionTitle = entry.target.querySelector('h2');
+                    if (sectionTitle) {
+                        sectionTitle.classList.remove('shimmer');
+                        sectionTitle.offsetHeight;
+                        sectionTitle.classList.add('shimmer');
+
+                        setTimeout(() => {
+                            sectionTitle.classList.remove('shimmer');
+                        }, 1000);
+                    }
+
+                    const cards = entry.target.querySelectorAll('.card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('animate');
+                        }, index * 50);
+                    });
+                } else {
+                    entry.target.classList.remove('animate');
+                    const cards = entry.target.querySelectorAll('.card');
+                    cards.forEach(card => {
+                        card.classList.remove('animate');
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const header = document.querySelector('header');
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight - 20;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const scrolled = window.pageYOffset;
+            const opacity = Math.min(scrolled / 100, 0.95);
+            header.style.background = `rgba(10, 10, 20, ${0.4 + opacity * 0.3})`;
+        });
+    </script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js"></script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        uniform float time;
+        uniform vec2 resolution;
+        void main()	{
+            gl_Position = vec4( position, 1.0 );
+        }
+    </script>
+
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        uniform float time;
+        uniform vec2 resolution;
+        uniform vec2 mouse;
+        uniform float speed;
+        
+        float hash(vec2 p) {
+            return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+        }
+        
+        vec2 random2(vec2 p) {
+            return vec2(hash(p), hash(p + vec2(1.0)));
+        }
+        
+        float noise(vec2 p) {
+            vec2 i = floor(p);
+            vec2 f = fract(p);
+            f = f * f * (3.0 - 2.0 * f);
+            
+            float a = hash(i);
+            float b = hash(i + vec2(1.0, 0.0));
+            float c = hash(i + vec2(0.0, 1.0));
+            float d = hash(i + vec2(1.0, 1.0));
+            
+            return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+        }
+        
+        void main()	{
+            vec2 uv = gl_FragCoord.xy / resolution.xy;
+            uv.x *= resolution.x / resolution.y;
+            
+            vec3 color = vec3(0.05, 0.05, 0.1);
+            
+            float pointDensity = 100.0;
+            vec2 gridId = floor(uv * pointDensity);
+            
+            vec2 originalPos = (gridId + random2(gridId)) / pointDensity;
+            
+            float timeScale = speed;
+            float motionScale = 0.015;
+            vec2 noiseOffset = vec2(
+                noise(originalPos * 8.0 + time * timeScale) - 0.5,
+                noise(originalPos * 8.0 + time * timeScale + 100.0) - 0.5
+            ) * motionScale;
+            
+            vec2 noiseOffset2 = vec2(
+                noise(originalPos * 15.0 + time * timeScale * 0.7 + 50.0) - 0.5,
+                noise(originalPos * 15.0 + time * timeScale * 0.7 + 150.0) - 0.5
+            ) * motionScale * 0.6;
+            
+            vec2 floatingPos = originalPos + noiseOffset + noiseOffset2;
+            
+            vec2 mouseUV = mouse / resolution.xy;
+            mouseUV.x *= resolution.x / resolution.y;
+            
+            vec2 mouseToPoint = floatingPos - mouseUV;
+            float mouseDistance = length(mouseToPoint);
+            
+            float repulsionRadius = 0.12;
+            float repulsionStrength = 0.03;
+            vec2 repulsion = vec2(0.0);
+            
+            if (mouseDistance < repulsionRadius && mouseDistance > 0.001) {
+                float force = (repulsionRadius - mouseDistance) / repulsionRadius;
+                force = smoothstep(0.0, 1.0, force) * force;
+                repulsion = normalize(mouseToPoint) * force * repulsionStrength;
+            }
+            
+            vec2 currentPos = floatingPos + repulsion;
+            
+            float pointSize = 0.002;
+            float pointDist = length(uv - currentPos);
+            float point = 1.0 - smoothstep(pointSize * 0.5, pointSize, pointDist);
+            
+            vec3 pointColor = vec3(0.0, 0.4, 0.0);
+            color = mix(color, pointColor, point);
+            
+            gl_FragColor = vec4(color, 1.0);
+        }
+    </script>
+    <script id="animation">
+        var container;
+        var camera, scene, renderer;
+        var uniforms, material, mesh;
+        var mouseX = 0, mouseY = 0,
+            lat = 0, lon = 0, phy = 0, theta = 0;
+
+        var windowHalfX = window.innerWidth / 2;
+        var windowHalfY = window.innerHeight / 2;
+
+        init();
+        var startTime = Date.now();
+        animate();
+
+        function init() {
+            container = document.getElementById('container');
+
+            camera = new THREE.Camera();
+            camera.position.z = 1;
+            scene = new THREE.Scene();
+
+            uniforms = {
+                time: { type: "f", value: 1.0 },
+                resolution: { type: "v2", value: new THREE.Vector2() },
+                mouse: { type: "v2", value: new THREE.Vector2() },
+                speed: { type: "f", value: 0.005 }
+            };
+
+            material = new THREE.ShaderMaterial({
+                uniforms: uniforms,
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragmentShader').textContent
+            });
+
+            mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+            scene.add(mesh);
+
+            renderer = new THREE.WebGLRenderer();
+            container.appendChild(renderer.domElement);
+
+            onWindowResize();
+
+            window.addEventListener('resize', onWindowResize, false);
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+
+            uniforms.mouse.value.x = mouseX;
+            uniforms.mouse.value.y = window.innerHeight - mouseY;
+        }
+
+        function onWindowResize() {
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
+
+            uniforms.resolution.value.x = window.innerWidth;
+            uniforms.resolution.value.y = window.innerHeight;
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            render();
+        }
+
+        function render() {
+            var elapsedMilliseconds = Date.now() - startTime;
+            var elapsedSeconds = elapsedMilliseconds / 1000.;
+            uniforms.time.value = 60. * elapsedSeconds;
+            renderer.render(scene, camera);
+        }
+    </script>
 </body>
 
 </html>
