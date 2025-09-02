@@ -449,8 +449,9 @@ footer {
 }
 
 .canvas {
-    width: clamp(280px, 80vw, 800px);
-    height: 40vh;
+    /* width: clamp(280px, 80vw, 800px); */
+    width: 60vw;
+    height: 50vh;
     max-height: 700px;
     position: relative;
     display: flex;
