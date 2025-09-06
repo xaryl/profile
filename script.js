@@ -1,4 +1,12 @@
 const canvas = document.querySelector('.canvas');
+const numberOfParticles = 300;
+
+for (let i = 1; i <= numberOfParticles; i++) {
+    const particle = document.createElement('div');
+    particle.className = `p${i}`;
+    canvas.appendChild(particle);
+}
+
 let lastToggleTime = 0;
 let animationFrameId;
 
