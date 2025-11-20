@@ -105,3 +105,60 @@ window.addEventListener('scroll', () => {
     const opacity = Math.min(scrolled / 100, 0.95);
     header.style.background = `rgba(10, 10, 20, ${0.4 + opacity * 0.3})`;
 });
+
+(function () {
+    const state = { fast: false, good: false, cheap: false };
+    const SWITCH_DELAY = 250;
+    const toggles = document.querySelectorAll('.fgc-toggle-wrapper');
+
+    function updateVisuals() {
+        toggles.forEach(toggle => {
+            const id = toggle.dataset.id;
+            const isOn = state[id];
+            const track = toggle.querySelector('.fgc-track');
+            if (isOn) {
+                track.classList.add('active');
+            } else {
+                track.classList.remove('active');
+            }
+        });
+    }
+
+    function animatePaw(targetId) {
+        const targetToggle = document.querySelector(`.fgc-toggle-wrapper[data-id="${targetId}"]`);
+        if (!targetToggle) return;
+        const paw = targetToggle.querySelector('.fgc-paw-container');
+
+        paw.classList.remove('animate-paw-push');
+        void paw.offsetWidth;
+        paw.classList.add('animate-paw-push');
+
+        paw.addEventListener('animationend', () => {
+            paw.classList.remove('animate-paw-push');
+        }, { once: true });
+    }
+
+    toggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const id = toggle.dataset.id;
+            state[id] = !state[id];
+            updateVisuals();
+
+            if (state.fast && state.good && state.cheap) {
+                let toDisable = '';
+                if (id === 'cheap') toDisable = 'fast';
+                if (id === 'good') toDisable = 'fast';
+                if (id === 'fast') toDisable = 'cheap';
+
+                animatePaw(toDisable);
+
+                setTimeout(() => {
+                    state[toDisable] = false;
+                    updateVisuals();
+                }, SWITCH_DELAY);
+            }
+        });
+    });
+
+    updateVisuals();
+})();

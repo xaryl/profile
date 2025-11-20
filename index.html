@@ -132,12 +132,65 @@
                     </p>
                     <a href="https://ela.kpi.ua/handle/123456789/75678" class="button" target="_blank">View Details</a>
                 </div>
-                <div class="card">
+                <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
                     <h3>More soon</h3>
-                    <p>
-                        Not published yet
-                    </p>
-                    <a href="#projects" class="button" target="_blank">View Details</a>
+                    <div class="fgc-container">
+
+                        <div class="fgc-toggle-wrapper" data-id="fast">
+                            <span class="fgc-label">Fast</span>
+                            <div class="fgc-switch-container">
+                                <div class="fgc-track">
+                                    <div class="fgc-knob"></div>
+                                </div>
+                                <div class="fgc-paw-container">
+                                    <svg viewBox="0 0 100 100" class="fgc-paw-svg">
+                                        <circle cx="50" cy="55" r="20" />
+                                        <circle cx="30" cy="35" r="8" />
+                                        <circle cx="50" cy="25" r="8" />
+                                        <circle cx="70" cy="35" r="8" />
+                                        <path d="M25,70 Q50,90 75,70 L80,120 L20,120 Z" fill="currentColor" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fgc-toggle-wrapper" data-id="good">
+                            <span class="fgc-label">Good</span>
+                            <div class="fgc-switch-container">
+                                <div class="fgc-track">
+                                    <div class="fgc-knob"></div>
+                                </div>
+                                <div class="fgc-paw-container">
+                                    <svg viewBox="0 0 100 100" class="fgc-paw-svg">
+                                        <circle cx="50" cy="55" r="20" />
+                                        <circle cx="30" cy="35" r="8" />
+                                        <circle cx="50" cy="25" r="8" />
+                                        <circle cx="70" cy="35" r="8" />
+                                        <path d="M25,70 Q50,90 75,70 L80,120 L20,120 Z" fill="currentColor" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fgc-toggle-wrapper" data-id="cheap">
+                            <span class="fgc-label">Cheap</span>
+                            <div class="fgc-switch-container">
+                                <div class="fgc-track">
+                                    <div class="fgc-knob"></div>
+                                </div>
+                                <div class="fgc-paw-container">
+                                    <svg viewBox="0 0 100 100" class="fgc-paw-svg">
+                                        <circle cx="50" cy="55" r="20" />
+                                        <circle cx="30" cy="35" r="8" />
+                                        <circle cx="50" cy="25" r="8" />
+                                        <circle cx="70" cy="35" r="8" />
+                                        <path d="M25,70 Q50,90 75,70 L80,120 L20,120 Z" fill="currentColor" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </section>
@@ -200,67 +253,85 @@
     </footer>
 
     <script id="vertexShader" type="x-shader/x-vertex">
-    uniform float time;
-    uniform vec2 mouse;
-    attribute vec3 aRandom;
-
-    float random(vec2 st) {
-        return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-    }
-
-    float noise(vec2 st) {
-        vec2 i = floor(st);
-        vec2 f = fract(st);
-
-        float a = random(i);
-        float b = random(i + vec2(1.0, 0.0));
-        float c = random(i + vec2(0.0, 1.0));
-        float d = random(i + vec2(1.0, 1.0));
-
-        vec2 u = f * f * (3.0 - 2.0 * f);
-        return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.y * u.x;
-    }
-
-
     void main() {
-        vec3 pos = position;
-
-        float frequency = 1.8;
-        float speed = 0.2;
-        float magnitude = 0.005;
-
-        float noiseX = noise(pos.xy * frequency + time * speed) * 2.0 - 1.0;
-        float noiseY = noise(pos.xy * frequency + time * speed + vec2(15.3, -8.7)) * 2.0 - 1.0;
-        
-        pos.xy += vec2(noiseX, noiseY) * magnitude;
-
-
-        float dist = distance(pos.xy, mouse);
-        
-        if (dist < 0.2) {
-            vec2 dir = normalize(pos.xy - mouse);
-            float force = (0.2 - dist) * 20.0;
-            pos.xy += dir * force * 0.02;
-        }
-
-        vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-        gl_Position = projectionMatrix * mvPosition;
-        
-        gl_PointSize = 2.0;
+        gl_Position = vec4(position, 1.0);
     }
     </script>
 
     <script id="fragmentShader" type="x-shader/x-fragment">
+    precision mediump float;
+
+    uniform float u_time;
+    uniform vec2 u_resolution;
+
+    float random(vec2 st) {
+        return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+    }
+
     void main() {
-        float d = distance(gl_PointCoord, vec2(0.5));
+        vec2 st = gl_FragCoord.xy / u_resolution.xy;
+        st.x *= u_resolution.x / u_resolution.y;
 
-        float alpha = 1.0 - smoothstep(0.4, 0.5, d);
+        vec3 color = vec3(0.01, 0.07, 0.07);
 
-        if (alpha < 0.01) {
-            discard;
+        for(float i = 1.0; i < 4.0; i++) {
+            vec2 layerSt = st * (10.0 * i);
+            layerSt.x += u_time * (0.05 / i);
+            layerSt.y -= u_time * (0.02 / i);
+
+            vec2 id = floor(layerSt);
+            
+            float t = u_time * 0.1 + random(id) * 6.28; 
+            float cycleID = floor(t);
+            float phase = fract(t); 
+            
+            float rnd = random(id + vec2(cycleID, cycleID * 37.0));
+
+            if(rnd > 0.95) {
+                vec2 local = fract(layerSt) - 0.5;
+                
+                vec2 offset = vec2(fract(rnd * 43.0), fract(rnd * 17.0)) - 0.5;
+                offset *= 0.7; 
+                
+                float dist = length(local - offset);
+                
+                float alpha = sin(phase * 3.14159);
+                
+                float star = 0.15 / (dist * 15.0) * alpha;
+                star *= smoothstep(0.5, 0.0, dist); 
+                
+                color += vec3(star);
+            }
         }
 
-        gl_FragColor = vec4(0.0, 0.4, 0.0, alpha);
+        float shootTimer = u_time * 0.05; 
+        float shootID = floor(shootTimer);
+        float shootT = fract(shootTimer);
+
+        if(shootT < 0.2) {
+            float rnd = random(vec2(shootID, 42.0));
+            float life = shootT / 0.2;
+            
+            vec2 startPos = vec2(mix(-0.2, 2.5, rnd), 1.2); 
+            vec2 endPos = startPos + vec2(-1.5, -1.2);
+            vec2 pos = mix(startPos, endPos, life);
+            
+            float dist = length(st - pos);
+            float head = 0.002 / max(dist, 0.001);
+            
+            vec2 dir = normalize(endPos - startPos);
+            vec2 toPixel = st - pos;
+            float proj = dot(toPixel, dir); 
+            float sideDist = length(toPixel - dir * proj);
+            
+            float tailMask = step(proj, 0.0) * step(-0.6, proj);
+            float fade = smoothstep(-0.6, 0.0, proj);
+            head += (0.002 / max(sideDist, 0.005)) * fade * tailMask;
+            
+            color += vec3(0.8, 0.9, 1.0) * head;
+        }
+
+        gl_FragColor = vec4(color, 1.0);
     }
     </script>
 

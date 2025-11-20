@@ -463,3 +463,119 @@ footer {
     align-items: center;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+.fgc-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    padding: 10px 0;
+    user-select: none;
+}
+
+.fgc-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+    height: 40px;
+}
+
+.fgc-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: inherit;
+    /* Inherit form card text color */
+}
+
+.fgc-switch-container {
+    position: relative;
+    width: 80px;
+    height: 40px;
+}
+
+.fgc-track {
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    padding: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    background-color: #4b5563;
+    /* Default gray */
+    position: relative;
+}
+
+.fgc-track.active {
+    background-color: #22c55e;
+    /* Green */
+}
+
+.fgc-knob {
+    width: 32px;
+    height: 32px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(0);
+}
+
+.fgc-track.active .fgc-knob {
+    transform: translateX(40px);
+}
+
+/* Paw Animation */
+.fgc-paw-container {
+    position: absolute;
+    top: -15px;
+    right: -5px;
+    width: 80px;
+    height: 80px;
+    pointer-events: none;
+    z-index: 50;
+    transform-origin: center;
+    display: none;
+    /* Hidden by default */
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+.fgc-paw-svg {
+    width: 100%;
+    height: 100%;
+    color: #d1d5db;
+    /* Light gray paw */
+    fill: currentColor;
+}
+
+@keyframes paw-push {
+    0% {
+        opacity: 0;
+        transform: translate(40px, -40px) rotate(20deg);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translate(10px, -10px) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(-25px, 0px) rotate(-10deg);
+    }
+
+    80% {
+        opacity: 1;
+        transform: translate(-25px, 0px) rotate(-10deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-25px, 30px) rotate(-20deg);
+    }
+}
+
+.animate-paw-push {
+    display: block;
+    animation: paw-push 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
