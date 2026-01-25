@@ -133,6 +133,11 @@ main {
     animation: typewriterFade 2s ease-out 0.5s forwards;
 }
 
+.me p>a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
 @keyframes typewriterFade {
     0% {
         opacity: 0;
